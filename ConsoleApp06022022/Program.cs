@@ -10,33 +10,36 @@ namespace ConsoleApp06022022
     {
         static void Main(string[] args)
         {
-            Money money = new Money("test", 180);
+            Money money = new Money("test", 13890);
            // Money money = new Money("руб", 13890);
             Console.WriteLine(money);
 
-            Console.ReadLine();
+
             // 2 объект делегата
             Money.MoneyConvertDelegate del = null;
 
-            //6/ добавить в делегат метод конвертации руб-> в доллар
+            //6/ добавить в делегат анонимный метод конвертации руб-> в доллар
             del += delegate (double amount)
               {
+                  // умножаем на курс
                   return amount * 0.013;
               };
 
             // протестируем
             money.MakeConvertOperation(del);
+
+            // конвертация рубля в гривну
             del += delegate (double amount)
               {
                   return amount * 0.37;
               };
-
+            money.MakeConvertOperation(del);
             // лямбда
-            
+            del = (amount) => amount * 0.000007;
 
             money.MakeConvertOperation(del);
 
-
+            Console.ReadLine();
         }
     }
 }
